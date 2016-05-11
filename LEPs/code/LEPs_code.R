@@ -1,15 +1,19 @@
-
+source("source/postgis_functions.r")
 library(rgeos)
 library(rgdal)
 library(dplyr)
 
-# Download OA 2011 shapefile. 
-download.file("https://census.edina.ac.uk/ukborders/easy_download/prebuilt/shape/England_oa_2011_gen.zip",
-              destfile = "oa11gen.zip")
-unzip("oa11gen.zip", exdir = ".")
-oa11gen <- readOGR(".", "england_oa_2011_gen")
 
-uregions <- readOGR(".","district_borough_unitary_ward_region")
-plot(uregions)
+# Read LEPs lookup table
+leps_lut <- read.csv("/media/kd/Data/Dropbox/Repos/rds/LEPs/leps.csv", sep="|")
 
-leps_lut <- read.csv("/media/kd/Data/Repos/rds/LEPs/leps.csv", sep="|")
+# Add OAs and LADs in PostGIS
+db <- create_db("cdrcdb", "postgres", "kd")
+con <- odbcConnect("cdrcdb", uid = "postgres", pwd="kd")
+ 
+import_or_append(con, "/media/kd/Data/Dropbox/Repos/rds/s_data", "oa2011", "england_oa_2011_gen.shp")
+import_or_append(con, "/media/kd/Data/Dropbox/Repos/rds/s_data", "lads", "district_borough_unitary_region.shp")
+
+# Add LEPs lookup table in PostGIS
+csv_types <- "lep varchar, la_name varchar, ons_lacode_old varchar, ons_lacode_new varchar, mleps integer"
+import_csv(con,"/media/kd/Data/Dropbox/Repos/rds/LEPs", "leps_lut","leps.csv",csv_types,"|")
