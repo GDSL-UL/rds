@@ -64,20 +64,24 @@ import_or_append <- function(con, working_dir, table_name, shp_names_ext){
   shp_names <- list.files(working_dir)
   shp_names <- shp_names[grep(gsub(pattern, "", shp_names_ext), gsub(pattern, "", shp_names))]
   shp_names <- shp_names[which(substr(shp_names, nchar(shp_names) - 2, nchar(shp_names)) == "shp")]
+  #  print(paste("The shapefile ", shp_names, "was found based on the pattern provided by the parameter shp_names_ext"))
   
   username <- unlist(strsplit(unlist(strsplit(attributes(con)$connection.string, ";"))[5], "="))[2]
   db_name <- unlist(strsplit(unlist(strsplit(attributes(con)$connection.string, ";"))[2], "="))[2]
   
   if (length(shp_names) > 0){
-    s2p <- paste('shp2pgsql -c -s 27700 -W "latin1" -I "', working_dir, '/', shp_names[1], '" ', table_name, ' | psql -U ', username, ' -d ', db_name, ' -w', sep="")
+    s2p <- paste('shp2pgsql -c -s 27700 -W "latin1" "', working_dir, '/', shp_names[1], '" ', table_name, ' | psql -U ', username, ' -d ', db_name, ' -w', sep="")
     system(s2p)
     
     if (length(shp_names) > 1){
       for (i in shp_names[2:length(shp_names)]){
-        s2p <- paste('shp2pgsql -a -s 27700 -W "latin1" -I "', working_dir, '/', i, '" ', table_name, ' | psql -U ', username, ' -d ', db_name, ' -w', sep="")
+        s2p <- paste('shp2pgsql -a -s 27700 -W "latin1" "', working_dir, '/', i, '" ', table_name, ' | psql -U ', username, ' -d ', db_name, ' -w', sep="")
         system(s2p)
       }
     }
+    
+    query <- paste("CREATE INDEX ON", table_name, "USING GIST(geom);")
+    odbcQuery(con, query)
     ################################# Correct invalid geometries #####################################
     
     query <- paste("SELECT gid, ST_IsValidReason(geom) FROM", table_name, "WHERE ST_IsValid(geom)=false;")
@@ -90,15 +94,17 @@ import_or_append <- function(con, working_dir, table_name, shp_names_ext){
         print(paste(nrow(results), " invalid geometries were found and corrected"))
       } else if (corrected == -1){
         print(paste(nrow(results), " invalid geometries were found but it was not possible to be corrected.",
-                    "Perhaps use ST_Buffer(geom, 0) to correct geometry."))
+                    "Perhaps use ST_Buffer(geom, 0) to correct geometry, e.g.",
+                    "CREATE TABLE my_table2 AS SELECT my_field, ST_Buffer(geom, 0) AS geom FROM my_table1;",
+                    "Then check geometry by: SELECT gid, ST_IsValidReason(geom) FROM my_table2 WHERE ST_IsValid(geom)=false;"))
       }
     }
+    print(paste("The shapefile ", shp_names, "was found based on the pattern provided by the parameter shp_names_ext"))
     return(results)
     ###################################################################################################
   } else {
     print("No shapefiles were found")
   }
-  
   odbcCloseAll()
 }
 
