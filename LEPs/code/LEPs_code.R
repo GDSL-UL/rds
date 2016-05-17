@@ -98,13 +98,19 @@ for (i in 1:nrow(lookup_lad[2])){
   dir <- as.character(lookup_lad$LAD11NM[i])
   print(paste("Load the CSV files of",dir))
   if (i == 1){
-    import_or_append(con, paste(getwd(),"/s_data/england_wales_zip/", dir, "/shapefiles/", sep = ""), "oa11", "_oa11.shp")
-    import_or_append(con, paste(getwd(),"/s_data/england_wales_zip/", dir, "/shapefiles/", sep = ""), "msoa11", "_msoa11.shp")
-    import_or_append(con, paste(getwd(),"/s_data/england_wales_zip/", dir, "/shapefiles/", sep = ""), "lsoa11", "_lsoa11.shp")
+    import_or_append(con, paste(getwd(),"/s_data/england_wales_zip/", dir, "/shapefiles/", sep = ""), "oa11", "_oa11.shp", index = FALSE)
+    import_or_append(con, paste(getwd(),"/s_data/england_wales_zip/", dir, "/shapefiles/", sep = ""), "msoa11", "_msoa11.shp", index = FALSE)
+    import_or_append(con, paste(getwd(),"/s_data/england_wales_zip/", dir, "/shapefiles/", sep = ""), "lsoa11", "_lsoa11.shp", index = FALSE)
   } else {
-    import_or_append(con, paste(getwd(),"/s_data/england_wales_zip/", dir, "/shapefiles/", sep = ""), "oa11", "_oa11.shp", append=TRUE)
-    import_or_append(con, paste(getwd(),"/s_data/england_wales_zip/", dir, "/shapefiles/", sep = ""), "msoa11", "_msoa11.shp", append=TRUE)
-    import_or_append(con, paste(getwd(),"/s_data/england_wales_zip/", dir, "/shapefiles/", sep = ""), "lsoa11", "_lsoa11.shp", append=TRUE)
+    if (i==nrow(lookup_lad[2])){
+      import_or_append(con, paste(getwd(),"/s_data/england_wales_zip/", dir, "/shapefiles/", sep = ""), "oa11", "_oa11.shp", append=TRUE)
+      import_or_append(con, paste(getwd(),"/s_data/england_wales_zip/", dir, "/shapefiles/", sep = ""), "msoa11", "_msoa11.shp", append=TRUE)
+      import_or_append(con, paste(getwd(),"/s_data/england_wales_zip/", dir, "/shapefiles/", sep = ""), "lsoa11", "_lsoa11.shp", append=TRUE)
+    } else{
+      import_or_append(con, paste(getwd(),"/s_data/england_wales_zip/", dir, "/shapefiles/", sep = ""), "oa11", "_oa11.shp", append=TRUE, index = FALSE)
+      import_or_append(con, paste(getwd(),"/s_data/england_wales_zip/", dir, "/shapefiles/", sep = ""), "msoa11", "_msoa11.shp", append=TRUE, index = FALSE)
+      import_or_append(con, paste(getwd(),"/s_data/england_wales_zip/", dir, "/shapefiles/", sep = ""), "lsoa11", "_lsoa11.shp", append=TRUE, index = FALSE)
+    }
   }
 }
 
@@ -112,7 +118,8 @@ for (i in 1:nrow(lookup_lad[2])){
 check_geometries(con,"oa11")
 check_geometries(con,"msoa11")
 check_geometries(con,"lsoa11")
-odbcCloseAll(con)
+
+
 
 
 
