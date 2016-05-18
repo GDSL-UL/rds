@@ -43,7 +43,7 @@ system(paste0('pgsql2shp -f ', getwd(), '/LEPs/data/leps.shp -h localhost -u ', 
 var_desc <- read.csv("m_code/ckan/var_desc.csv")
 pg_tables <- unique(var_desc$DatasetId)
 pg_tables <- data.frame(pg_tables)
-pg_cols <- paste(var_desc$ColumnVariableCode, ifelse(var_desc$ColumnVariableMeasurementUnit == "Sum", "integer",
+pg_cols <- paste(var_desc$ColumnVariableCode, ifelse(var_desc$ColumnVariableMeasurementUnit == "Sum", "decimal",
                                                      ifelse(var_desc$ColumnVariableMeasurementUnit == "Ratio", "decimal",
                                                             ifelse(var_desc$ColumnVariableMeasurementUnit == "Percentage", "decimal",
                                                                    ifelse(var_desc$ColumnVariableMeasurementUnit == "Years", "integer",
@@ -56,6 +56,7 @@ lookup_lad$LAD11LEPS <- ifelse(lookup_lad$LAD11CD=="E07000097","E07000242",
                                  ifelse(lookup_lad$LAD11CD=="E07000100","E07000240", 
                                           ifelse(lookup_lad$LAD11CD=="E07000101","E07000243", 
                                                  ifelse(lookup_lad$LAD11CD=="E07000104","E07000241", as.character(lookup_lad$LAD11CD)))))
+lookup_lad$lepid <- leps_lut[match(lookup_lad$LAD11LEPS, leps_lut$ons_lacode_new),6]
 
 # Create tables in PostGIS for the Census CDRC Data Packs
 for (i in 1:nrow(pg_tables[1])){
@@ -118,6 +119,65 @@ for (i in 1:nrow(lookup_lad[2])){
 check_geometries(con,"oa11")
 check_geometries(con,"msoa11")
 check_geometries(con,"lsoa11")
+
+# Create LEP directories
+
+dir.create("/media/kd/Data/temp/LEPs/tables")
+dir.create("/media/kd/Data/temp/LEPs/shapefiles")
+
+for (i in leps_ids[,1]){
+  print(i)
+  # Extract Census tables
+  lep_tb_path <- paste0("/media/kd/Data/temp/LEPs/tables/LEP",as.character(i))
+  dir.create(lep_tb_path)
+}
+
+# Extract Census tables
+for (i in leps_ids[,1]){
+  print(i)
+  
+  lep_tb_path <- paste0("/media/kd/Data/temp/LEPs/tables/LEP",as.character(i))
+  
+  v_lads <- data.frame(lookup_lad[lookup_lad$lepid == i,1])
+  v_lads <- v_lads[complete.cases(v_lads),]
+  v_lads <- data.frame(v_lads)
+  
+  field_value_oa <- as.character(unique(lookup[ which( lookup$LAD11CD %in% v_lads$v_lads ),1]))
+  
+  field_value_lsoa <- as.character(unique(lookup[ which( lookup$LAD11CD %in% v_lads$v_lads ),2]))
+  
+  field_value_msoa <- as.character(unique(lookup[ which( lookup$LAD11CD %in% v_lads$v_lads ),4]))
+
+  for (x in 1:nrow(pg_tables[1])){
+    tb <- as.character(tolower(pg_tables$pg_tables[x]))
+    get_subset_table(paste0(tb,"_oa"), "geographycode", field_value_oa, paste0(lep_tb_path,"/",toupper(tb),"_oa11.csv"),con)
+    get_subset_table(paste0(tb,"_lsoa"), "geographycode", field_value_lsoa, paste0(lep_tb_path,"/",toupper(tb),"_lsoa11.csv"),con)
+    get_subset_table(paste0(tb,"_msoa"), "geographycode", field_value_msoa, paste0(lep_tb_path,"/",toupper(tb),"_msoa11.csv"),con)
+  }
+  
+  
+}
+
+i<-c("01")
+
+lep_tb_path <- paste0("/media/kd/Data/temp/LEPs/tables/LEP",as.character(i))
+
+v_lads <- data.frame(lookup_lad[lookup_lad$lepid == i,1])
+v_lads <- v_lads[complete.cases(v_lads),]
+v_lads <- data.frame(v_lads)
+
+field_value_oa <- as.character(unique(lookup[ which( lookup$LAD11CD %in% v_lads$v_lads ),1]))
+
+field_value_lsoa <- as.character(unique(lookup[ which( lookup$LAD11CD %in% v_lads$v_lads ),2]))
+
+field_value_msoa <- as.character(unique(lookup[ which( lookup$LAD11CD %in% v_lads$v_lads ),4]))
+
+for (x in 1:nrow(pg_tables[1])){
+  tb <- as.character(tolower(pg_tables$pg_tables[x]))
+  get_subset_table(paste0(tb,"_oa"), "geographycode", field_value_oa, paste0(lep_tb_path,"/",toupper(tb),"_oa11.csv"),con)
+  get_subset_table(paste0(tb,"_lsoa"), "geographycode", field_value_lsoa, paste0(lep_tb_path,"/",toupper(tb),"_lsoa11.csv"),con)
+  get_subset_table(paste0(tb,"_msoa"), "geographycode", field_value_msoa, paste0(lep_tb_path,"/",toupper(tb),"_msoa11.csv"),con)
+}
 
 
 
