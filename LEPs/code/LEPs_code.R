@@ -46,11 +46,13 @@ pg_tables <- data.frame(pg_tables)
 pg_cols <- paste(var_desc$ColumnVariableCode, ifelse(var_desc$ColumnVariableMeasurementUnit == "Sum", "decimal",
                                                      ifelse(var_desc$ColumnVariableMeasurementUnit == "Ratio", "decimal",
                                                             ifelse(var_desc$ColumnVariableMeasurementUnit == "Percentage", "decimal",
-                                                                   ifelse(var_desc$ColumnVariableMeasurementUnit == "Years", "integer",
+                                                                   ifelse(var_desc$ColumnVariableMeasurementUnit == "Years", "decimal",
                                                                           ifelse(var_desc$ColumnVariableMeasurementUnit == "Average", "decimal","integer"))))), sep = " ")
 
 lookup <- read.csv("m_code/ckan/lookup.csv")
+lookup$LAD11NM <- ifelse(lookup$LAD11NM =="King's Lynn and West Norfolk","Kings Lynn and West Norfolk",as.character(lookup$LAD11NM))
 lookup_lad <- unique(lookup[,c("LAD11CD", "LAD11NM")])
+
 # Four LAD codes have different codes. Next line creates an extra column with the edited codes as recorded on the official LEPs documents 
 lookup_lad$LAD11LEPS <- ifelse(lookup_lad$LAD11CD=="E07000097","E07000242", 
                                  ifelse(lookup_lad$LAD11CD=="E07000100","E07000240", 
@@ -60,32 +62,79 @@ lookup_lad$lepid <- leps_lut[match(lookup_lad$LAD11LEPS, leps_lut$ons_lacode_new
 
 # Create tables in PostGIS for the Census CDRC Data Packs
 for (i in 1:nrow(pg_tables[1])){
-  var_lst <- paste(grep(pg_tables$pg_tables[i],pg_cols, value=TRUE), collapse = ', ')
+  var_lst <- paste(grep(pg_tables$pg_tables[i], pg_cols, value=TRUE), collapse = ', ')
+  
   # Create OA tables
   odbcQuery(con, paste0("DROP TABLE IF EXISTS ",pg_tables$pg_tables[i],"_oa;"))
-  odbcQuery(con, paste0("CREATE TABLE ",pg_tables$pg_tables[i],"_oa (GeographyCode varchar, ", var_lst, ");"))
+  odbcQuery(con, paste0("CREATE TABLE ",pg_tables$pg_tables[i],"_oa (GeographyCode varchar, ", var_lst, ");")) 
+  
   # Create LSOA tables
-  odbcQuery(con, paste0("DROP TABLE IF EXISTS ",pg_tables$pg_tables[i],"_lsoa;"))
-  odbcQuery(con, paste0("CREATE TABLE ",pg_tables$pg_tables[i],"_lsoa (GeographyCode varchar, ", var_lst, ");"))
+  if (pg_tables$pg_tables[i]=="KS403EW"){
+    var_lst <- gsub("KS403EW0006 decimal,","",var_lst)
+    var_lst <- gsub("KS403EW0007 decimal,","",var_lst)
+    var_lst <- gsub("KS403EW0008 decimal,","",var_lst)
+    odbcQuery(con, paste0("DROP TABLE IF EXISTS ",pg_tables$pg_tables[i],"_lsoa;"))
+    odbcQuery(con, paste0("CREATE TABLE ",pg_tables$pg_tables[i],"_lsoa (GeographyCode varchar, ", var_lst, ");"))
+  } else {
+    if (pg_tables$pg_tables[i]=="KS102EW"){
+      var_lst <- gsub("KS102EW0018 decimal,","",var_lst)
+      var_lst <- gsub("KS102EW0019 decimal,","",var_lst)
+      odbcQuery(con, paste0("DROP TABLE IF EXISTS ",pg_tables$pg_tables[i],"_lsoa;"))
+      odbcQuery(con, paste0("CREATE TABLE ",pg_tables$pg_tables[i],"_lsoa (GeographyCode varchar, ", var_lst, ");"))
+    } else {
+      odbcQuery(con, paste0("DROP TABLE IF EXISTS ",pg_tables$pg_tables[i],"_lsoa;"))
+      odbcQuery(con, paste0("CREATE TABLE ",pg_tables$pg_tables[i],"_lsoa (GeographyCode varchar, ", var_lst, ");"))
+    }
+  }
+  
   # Create MSOA tables
-  odbcQuery(con, paste0("DROP TABLE IF EXISTS ",pg_tables$pg_tables[i],"_msoa;"))
-  odbcQuery(con, paste0("CREATE TABLE ",pg_tables$pg_tables[i],"_msoa (GeographyCode varchar, ", var_lst, ");"))
+  if (pg_tables$pg_tables[i]=="KS403EW"){
+    var_lst <- gsub("KS403EW0006 decimal,","",var_lst)
+    var_lst <- gsub("KS403EW0007 decimal,","",var_lst)
+    var_lst <- gsub("KS403EW0008 decimal,","",var_lst)
+    
+    odbcQuery(con, paste0("DROP TABLE IF EXISTS ",pg_tables$pg_tables[i],"_msoa;"))
+    odbcQuery(con, paste0("CREATE TABLE ",pg_tables$pg_tables[i],"_msoa (GeographyCode varchar, ", var_lst, ");"))
+  } else {
+    if (pg_tables$pg_tables[i]=="KS102EW"){
+      var_lst <- gsub("KS102EW0018 decimal,","",var_lst)
+      var_lst <- gsub("KS102EW0019 decimal,","",var_lst)
+      odbcQuery(con, paste0("DROP TABLE IF EXISTS ",pg_tables$pg_tables[i],"_msoa;"))
+      odbcQuery(con, paste0("CREATE TABLE ",pg_tables$pg_tables[i],"_msoa (GeographyCode varchar, ", var_lst, ");"))
+    } else {
+      odbcQuery(con, paste0("DROP TABLE IF EXISTS ",pg_tables$pg_tables[i],"_msoa;"))
+      odbcQuery(con, paste0("CREATE TABLE ",pg_tables$pg_tables[i],"_msoa (GeographyCode varchar, ", var_lst, ");"))
+    }
+  }
 }
 
 # Load Census CDRC Data Pack CSVs in PostGIS
 for (i in 1:nrow(lookup_lad[2])){
   
   dir <- as.character(lookup_lad$LAD11NM[i])
-  print(paste("Load the CSV files of",dir))
+  print(paste0(i,": Load the CSV files of ",dir))
   
   for (x in 1:nrow(pg_tables[1])){
     tb <- as.character(tolower(pg_tables$pg_tables[x])) 
-    odbcQuery(con, paste0("COPY ",tb,"_oa FROM '", getwd(),"/s_data/england_wales_zip/", dir, "/tables/", 
-                           as.character(pg_tables$pg_tables[x]),"_oa11.csv' DELIMITER ',' CSV HEADER;"))
-    odbcQuery(con, paste0("COPY ",tb,"_lsoa FROM '", getwd(),"/s_data/england_wales_zip/", dir, "/tables/", 
-                          as.character(pg_tables$pg_tables[x]),"_lsoa11.csv' DELIMITER ',' CSV HEADER;"))
-    odbcQuery(con, paste0("COPY ",tb,"_msoa FROM '", getwd(),"/s_data/england_wales_zip/", dir, "/tables/", 
-                          as.character(pg_tables$pg_tables[x]),"_msoa11.csv' DELIMITER ',' CSV HEADER;"))
+    
+    stat <- odbcQuery(con, paste0("COPY ",tb,"_oa FROM '", getwd(),"/s_data/england_wales_zip/", dir, "/tables/", 
+                                  as.character(pg_tables$pg_tables[x]),"_oa11.csv' DELIMITER ',' CSV HEADER;"))
+    if (stat == -1L) {
+      print(odbcGetErrMsg(con))
+      odbcClearError(con)
+    }
+    stat <- odbcQuery(con, paste0("COPY ",tb,"_lsoa FROM '", getwd(),"/s_data/england_wales_zip/", dir, "/tables/", 
+                                  as.character(pg_tables$pg_tables[x]),"_lsoa11.csv' DELIMITER ',' CSV HEADER;"))
+    if (stat == -1L) {
+      print(odbcGetErrMsg(con))
+      odbcClearError(con)
+    }
+    stat <- odbcQuery(con, paste0("COPY ",tb,"_msoa FROM '", getwd(),"/s_data/england_wales_zip/", dir, "/tables/", 
+                                  as.character(pg_tables$pg_tables[x]),"_msoa11.csv' DELIMITER ',' CSV HEADER;"))
+    if (stat == -1L) {
+      print(odbcGetErrMsg(con))
+      odbcClearError(con)
+    }
   }
 }
 
@@ -127,7 +176,6 @@ dir.create("/media/kd/Data/temp/LEPs/shapefiles")
 
 for (i in leps_ids[,1]){
   print(i)
-  # Extract Census tables
   lep_tb_path <- paste0("/media/kd/Data/temp/LEPs/tables/LEP",as.character(i))
   dir.create(lep_tb_path)
 }
@@ -157,31 +205,6 @@ for (i in leps_ids[,1]){
   
   
 }
-
-i<-c("01")
-
-lep_tb_path <- paste0("/media/kd/Data/temp/LEPs/tables/LEP",as.character(i))
-
-v_lads <- data.frame(lookup_lad[lookup_lad$lepid == i,1])
-v_lads <- v_lads[complete.cases(v_lads),]
-v_lads <- data.frame(v_lads)
-
-field_value_oa <- as.character(unique(lookup[ which( lookup$LAD11CD %in% v_lads$v_lads ),1]))
-
-field_value_lsoa <- as.character(unique(lookup[ which( lookup$LAD11CD %in% v_lads$v_lads ),2]))
-
-field_value_msoa <- as.character(unique(lookup[ which( lookup$LAD11CD %in% v_lads$v_lads ),4]))
-
-for (x in 1:nrow(pg_tables[1])){
-  tb <- as.character(tolower(pg_tables$pg_tables[x]))
-  get_subset_table(paste0(tb,"_oa"), "geographycode", field_value_oa, paste0(lep_tb_path,"/",toupper(tb),"_oa11.csv"),con)
-  get_subset_table(paste0(tb,"_lsoa"), "geographycode", field_value_lsoa, paste0(lep_tb_path,"/",toupper(tb),"_lsoa11.csv"),con)
-  get_subset_table(paste0(tb,"_msoa"), "geographycode", field_value_msoa, paste0(lep_tb_path,"/",toupper(tb),"_msoa11.csv"),con)
-}
-
-
-
-
 
 
 
