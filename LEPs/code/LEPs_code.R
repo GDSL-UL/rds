@@ -138,6 +138,27 @@ for (i in 1:nrow(lookup_lad[2])){
   }
 }
 
+# Create indices 
+for (x in 1:nrow(pg_tables[1])){
+  tb <- as.character(tolower(pg_tables$pg_tables[x])) 
+  
+  stat <- odbcQuery(con, paste0("CREATE INDEX ",tb ,"_oa_geocode_index ON ", tb, "_oa (geographycode);"))
+  if (stat == -1L) {
+    print(odbcGetErrMsg(con))
+    odbcClearError(con)
+  }
+  stat <- odbcQuery(con, paste0("CREATE INDEX ",tb ,"_lsoa_geocode_index ON ", tb, "_lsoa (geographycode);"))
+  if (stat == -1L) {
+    print(odbcGetErrMsg(con))
+    odbcClearError(con)
+  }
+  stat <- odbcQuery(con, paste0("CREATE INDEX ",tb ,"_msoa_geocode_index ON ", tb, "_msoa (geographycode);"))
+  if (stat == -1L) {
+    print(odbcGetErrMsg(con))
+    odbcClearError(con)
+  }
+}
+
 # Load OAs/LSOAs/MSOAs geographies
 
 odbcQuery(con, "DROP TABLE IF EXISTS oa11;")
@@ -181,7 +202,7 @@ for (i in leps_ids[,1]){
 }
 
 # Extract Census tables
-for (i in leps_ids[,1]){
+for (i in leps_ids[15:39,1]){
   print(i)
   
   lep_tb_path <- paste0("/media/kd/Data/temp/LEPs/tables/LEP",as.character(i))
@@ -202,8 +223,6 @@ for (i in leps_ids[,1]){
     get_subset_table(paste0(tb,"_lsoa"), "geographycode", field_value_lsoa, paste0(lep_tb_path,"/",toupper(tb),"_lsoa11.csv"),con)
     get_subset_table(paste0(tb,"_msoa"), "geographycode", field_value_msoa, paste0(lep_tb_path,"/",toupper(tb),"_msoa11.csv"),con)
   }
-  
-  
 }
 
 
