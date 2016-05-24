@@ -57,7 +57,9 @@ lookup_lad <- unique(lookup[,c("LAD11CD", "LAD11NM")])
 lookup_lad$LAD11LEPS <- ifelse(lookup_lad$LAD11CD=="E07000097","E07000242", 
                                  ifelse(lookup_lad$LAD11CD=="E07000100","E07000240", 
                                           ifelse(lookup_lad$LAD11CD=="E07000101","E07000243", 
-                                                 ifelse(lookup_lad$LAD11CD=="E07000104","E07000241", as.character(lookup_lad$LAD11CD)))))
+                                                 ifelse(lookup_lad$LAD11CD=="E08000020","E08000037",
+                                                        ifelse(lookup_lad$LAD11CD=="E06000048","E06000057",
+                                                               ifelse(lookup_lad$LAD11CD=="E07000104","E07000241", as.character(lookup_lad$LAD11CD)))))))
 lookup_lad$lepid <- leps_lut[match(lookup_lad$LAD11LEPS, leps_lut$ons_lacode_new),6]
 
 # Create tables in PostGIS for the Census CDRC Data Packs
@@ -191,25 +193,39 @@ check_geometries(con,"msoa11")
 check_geometries(con,"lsoa11")
 
 # Create LEP directories
-
-dir.create("/media/kd/Data/temp/LEPs/tables")
-dir.create("/media/kd/Data/temp/LEPs/shapefiles")
+for (i in leps_ids[,1]){
+  print(i)
+  lep_tb_path <- paste0("/media/kd/Data/temp/LEPs/LEP",as.character(i))
+  dir.create(lep_tb_path)
+}
 
 for (i in leps_ids[,1]){
   print(i)
-  lep_tb_path <- paste0("/media/kd/Data/temp/LEPs/tables/LEP",as.character(i))
+  lep_tb_path <- paste0("/media/kd/Data/temp/LEPs/LEP",as.character(i),"/tables/")
+  dir.create(lep_tb_path)
+}
+
+for (i in leps_ids[,1]){
+  print(i)
+  lep_tb_path <- paste0("/media/kd/Data/temp/LEPs/LEP",as.character(i),"/shapefiles/")
   dir.create(lep_tb_path)
 }
 
 # Extract Census tables
-for (i in leps_ids[15:39,1]){
+for (i in leps_ids[,1]){
   print(i)
   
-  lep_tb_path <- paste0("/media/kd/Data/temp/LEPs/tables/LEP",as.character(i))
+  lep_tb_path <- paste0("/media/kd/Data/temp/LEPs/LEP",as.character(i), "/tables")
   
-  v_lads <- data.frame(lookup_lad[lookup_lad$lepid == i,1])
+  v_lads <- as.character(leps_lut[leps_lut$lepid == i,4])
+  v_lads <- data.frame(v_lads)
+  v_lads <- as.character(lookup_lad[which(lookup_lad$LAD11LEPS %in% v_lads$v_lads),1])
+  v_lads <- data.frame(v_lads)
   v_lads <- v_lads[complete.cases(v_lads),]
   v_lads <- data.frame(v_lads)
+  # v_lads <- data.frame(lookup_lad[lookup_lad$lepid == i,1])
+  # v_lads <- v_lads[complete.cases(v_lads),]
+  # v_lads <- data.frame(v_lads)
   
   field_value_oa <- as.character(unique(lookup[ which( lookup$LAD11CD %in% v_lads$v_lads ),1]))
   
@@ -225,6 +241,31 @@ for (i in leps_ids[15:39,1]){
   }
 }
 
+# Extract LEP's Shapefiles for OA,LSOA & MSOA geographies
+for (i in leps_ids[,1]){
+  print(i)
+  
+  lep_tb_path <- paste0("/media/kd/Data/temp/LEPs/LEP",as.character(i), "/shapefiles")
+  
+  v_lads <- as.character(leps_lut[leps_lut$lepid == i,4])
+  v_lads <- data.frame(v_lads)
+  v_lads <- as.character(lookup_lad[which(lookup_lad$LAD11LEPS %in% v_lads$v_lads),1])
+  v_lads <- data.frame(v_lads)
+  v_lads <- v_lads[complete.cases(v_lads),]
+  v_lads <- data.frame(v_lads)
+  
+  field_value_oa <- as.character(unique(lookup[ which( lookup$LAD11CD %in% v_lads$v_lads ),1]))
+  
+  field_value_lsoa <- as.character(unique(lookup[ which( lookup$LAD11CD %in% v_lads$v_lads ),2]))
+  
+  field_value_msoa <- as.character(unique(lookup[ which( lookup$LAD11CD %in% v_lads$v_lads ),4]))
+
+  tb <- tolower(paste0("LEP",as.character(i)))
+  get_subset_geo(paste0("oa11"), "oa11cd", field_value_oa, paste0(lep_tb_path,"/",toupper(tb),"_oa11.shp"),con,pwd)
+  get_subset_geo(paste0("lsoa11"), "lsoa11cd", field_value_lsoa, paste0(lep_tb_path,"/",toupper(tb),"_lsoa11.shp"),con,pwd)
+  get_subset_geo(paste0("msoa11"), "msoa11cd", field_value_msoa, paste0(lep_tb_path,"/",toupper(tb),"_msoa11.shp"),con,pwd)
+
+}
 
 
 

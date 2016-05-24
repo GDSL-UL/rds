@@ -1,8 +1,8 @@
 lep|la_name|ons_lacode_old|ons_lacode_new|mleps|lepid
 Cumbria|Carlisle|16UD|E07000028|0|07
 Cumbria|Allerdale|16UB|E07000026|0|07
-Cumbria|Copel&|16UE|E07000029|0|07
-Cumbria|South Lakel&|16UG|E07000031|0|07
+Cumbria|Copeland|16UE|E07000029|0|07
+Cumbria|South Lakeland|16UG|E07000031|0|07
 Cumbria|Eden|16UF|E07000030|0|07
 Cumbria|Barrow-in-Furness|16UC|E07000027|0|07
 Greater Manchester|Bolton|00BL|E08000001|0|15
@@ -89,9 +89,9 @@ The Marches|Herefordshire, County of|00GA|E06000019|0|36
 Greater Cambridge & Greater Peterborough|Cambridge|12UB|E07000008|0|13
 Greater Cambridge & Greater Peterborough|Peterborough|00JA|E06000031|0|13
 Greater Cambridge & Greater Peterborough|Huntingdonshire|12UE|E07000011|0|13
-Greater Cambridge & Greater Peterborough|Fenl&|12UD|E07000010|0|13
+Greater Cambridge & Greater Peterborough|Fenland|12UD|E07000010|0|13
 Greater Cambridge & Greater Peterborough|East Cambridgeshire|12UC|E07000009|0|13
-Greater Cambridge & Greater Peterborough|Rutl&|00FP|E06000017|0|13
+Greater Cambridge & Greater Peterborough|Rutland|00FP|E06000017|0|13
 Greater Cambridge & Greater Peterborough|South Cambridgeshire|12UG|E07000012|0|13
 Greater Cambridge & Greater Peterborough|King's Lynn & West Norfolk|33UE|E07000146|1|13
 Greater Cambridge & Greater Peterborough|Forest Heath|42UC|E07000201|1|13
@@ -133,7 +133,7 @@ Cornwall & the Isles of Scilly|Isles of Scilly|00HF|E06000053|0|05
 Tees Valley|Darlington|00EH|E06000005|0|34
 Tees Valley|Hartlepool|00EB|E06000001|0|34
 Tees Valley|Middlesbrough|00EC|E06000002|0|34
-Tees Valley|Redcar & Clevel&|00EE|E06000003|0|34
+Tees Valley|Redcar & Cleveland|00EE|E06000003|0|34
 Tees Valley|Stockton-on-Tees|00EF|E06000004|0|34
 Greater Lincolnshire|West Lindsey|32UH|E07000142|0|14
 Greater Lincolnshire|Lincoln|32UD|E07000138|0|14
@@ -141,7 +141,7 @@ Greater Lincolnshire|East Lindsey|32UC|E07000137|0|14
 Greater Lincolnshire|North Kesteven|32UE|E07000139|0|14
 Greater Lincolnshire|Boston|32UB|E07000136|0|14
 Greater Lincolnshire|South Kesteven|32UG|E07000141|0|14
-Greater Lincolnshire|South Holl&|32UF|E07000140|0|14
+Greater Lincolnshire|South Holland|32UF|E07000140|0|14
 Greater Lincolnshire|North Lincolnshire|00FD|E06000013|1|14
 Greater Lincolnshire|North East Lincolnshire|00FC|E06000012|1|14
 South East Midlands|Bedford|00KB|E06000055|0|31
@@ -193,7 +193,7 @@ South East|Rother|21UG|E07000064|0|30
 South East|Wealden|21UH|E07000065|0|30
 South East|Eastbourne|21UC|E07000061|0|30
 South East|Lewes|21UF|E07000063|1|30
-Stoke-on-Trent & Staffordshire|Staffordshire Moorl&s|41UH|E07000198|0|32
+Stoke-on-Trent & Staffordshire|Staffordshire Moorlands|41UH|E07000198|0|32
 Stoke-on-Trent & Staffordshire|Stoke-on-trent|00GL|E06000021|0|32
 Stoke-on-Trent & Staffordshire|Stafford|41UG|E07000197|0|32
 Stoke-on-Trent & Staffordshire|South Staffordshire|41UF|E07000196|0|32
@@ -212,19 +212,19 @@ Coast to Capital|Crawley|45UE|E07000226|0|04
 Coast to Capital|Worthing|45UH|E07000229|0|04
 Coast to Capital|Croydon|00AH|E09000008|1|04
 Coast to Capital|Reigate & Banstead|43UF|E07000211|0|04
-Coast to Capital|T&ridge|43UK|E07000215|0|04
+Coast to Capital|Tandridge|43UK|E07000215|0|04
 Coast to Capital|Mole Valley|43UE|E07000210|0|04
 Coast to Capital|Lewes|21UF|E07000063|1|04
 Coast to Capital|Epsom & Ewell|43UC|E07000208|0|04
 New Anglia|Babergh|42UB|E07000200|0|24
-New Anglia|Broadl&|33UC|E07000144|0|24
+New Anglia|Broadland|33UC|E07000144|0|24
 New Anglia|Great Yarmouth|33UD|E07000145|0|24
 New Anglia|King's Lynn & West Norfolk|33UE|E07000146|1|24
 New Anglia|North Norfolk|33UF|E07000147|0|24
 New Anglia|St Edmundsbury|42UF|E07000204|1|24
 New Anglia|Suffolk Coastal|42UG|E07000205|0|24
 New Anglia|Waveney|42UH|E07000206|0|24
-New Anglia|Breckl&|33UB|E07000143|0|24
+New Anglia|Breckland|33UB|E07000143|0|24
 New Anglia|Forest Heath|42UC|E07000201|1|24
 New Anglia|Ipswich|42UD|E07000202|0|24
 New Anglia|Mid Suffolk|42UE|E07000203|0|24
@@ -232,7 +232,7 @@ New Anglia|South Norfolk|33UH|E07000149|0|24
 New Anglia|Norwich|33UG|E07000148|0|24
 Black Country|Wolverhampton|00CW|E08000031|0|01
 Black Country|Walsall|00CU|E08000030|0|01
-Black Country|S&well|00CS|E08000028|0|01
+Black Country|Sandwell|00CS|E08000028|0|01
 Black Country|Dudley|00CR|E08000027|0|01
 Worcestershire|Wyre Forest|47UG|E07000239|1|38
 Worcestershire|Malvern Hills|47UC|E07000235|0|38
@@ -241,12 +241,12 @@ Worcestershire|Wychavon|47UF|E07000238|0|38
 Worcestershire|Bromsgrove|47UB|E07000234|1|38
 Worcestershire|Redditch|47UD|E07000236|1|38
 North Eastern|County Durham|00EJ|E06000047|0|25
-North Eastern|Gateshead|00CH|E08000020|0|25
+North Eastern|Gateshead|00CH|E08000037|0|25
 North Eastern|Newcastle upon Tyne|00CJ|E08000021|0|25
 North Eastern|North Tyneside|00CK|E08000022|0|25
-North Eastern|Northumberl&|00EM|E06000048|0|25
+North Eastern|Northumberland|00EM|E06000057|0|25
 North Eastern|South Tyneside|00CL|E08000023|0|25
-North Eastern|Sunderl&|00CM|E08000024|0|25
+North Eastern|Sunderland|00CM|E08000024|0|25
 York & North Yorkshire|York|00FF|E06000014|1|39
 York & North Yorkshire|Craven|36UB|E07000163|1|39
 York & North Yorkshire|Hambleton|36UC|E07000164|0|39
@@ -301,7 +301,7 @@ London|Southwark|00BE|E09000028|0|23
 London|Sutton|00BF|E09000029|0|23
 London|Tower Hamlets|00BG|E09000030|0|23
 London|Waltham Forest|00BH|E09000031|0|23
-London|W&sworth|00BJ|E09000032|0|23
+London|Wandsworth|00BJ|E09000032|0|23
 London|Westminster|00BK|E09000033|0|23
 Heart of the South West|Torridge|18UK|E07000046|0|16
 Heart of the South West|West Devon|18UL|E07000047|0|16
@@ -349,7 +349,7 @@ Dorset|North Dorset|19UE|E07000050|0|09
 Dorset|East Dorset|19UD|E07000049|0|09
 Dorset|Christchurch|19UC|E07000048|0|09
 Dorset|Purbeck|19UG|E07000051|0|09
-Dorset|Weymouth & Portl&|19UJ|E07000053|0|09
+Dorset|Weymouth & Portland|19UJ|E07000053|0|09
 Swindon & Wiltshire|Swindon|00HX|E06000030|0|33
 Swindon & Wiltshire|Wiltshire|00HY|E06000054|0|33
 Northamptonshire|Daventry|34UC|E07000151|1|26
