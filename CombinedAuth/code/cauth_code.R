@@ -98,15 +98,12 @@ for (i in cauthids[,1]){
 }
 
 # Extract LEP's Shapefiles for OA,LSOA & MSOA geographies
-for (i in leps_ids[,1]){
+for (i in cauthids[,1]){
   print(i)
   
-  lep_tb_path <- paste0("/media/kd/Data/temp/CombinedAuth/CombAuth",as.character(i), "/shapefiles")
+  cauth_tb_path <- paste0("/media/kd/Data/temp/CombinedAuth/CombAuth",as.character(i), "/shapefiles")
   
-  v_lads <- as.character(leps_lut[leps_lut$lepid == i,4])
-  v_lads <- data.frame(v_lads)
-  v_lads <- as.character(lookup_lad[which(lookup_lad$LAD11LEPS %in% v_lads$v_lads),1])
-  v_lads <- data.frame(v_lads)
+  v_lads <- data.frame(cauth_lut[cauth_lut$cauthid == i,4])
   v_lads <- v_lads[complete.cases(v_lads),]
   v_lads <- data.frame(v_lads)
   
@@ -117,9 +114,9 @@ for (i in leps_ids[,1]){
   field_value_msoa <- as.character(unique(lookup[ which( lookup$LAD11CD %in% v_lads$v_lads ),4]))
 
   tb <- tolower(paste0("CombAuth",as.character(i)))
-  get_subset_geo(paste0("oa11"), "oa11cd", field_value_oa, paste0(lep_tb_path,"/",toupper(tb),"_oa11.shp"),con,pwd)
-  get_subset_geo(paste0("lsoa11"), "lsoa11cd", field_value_lsoa, paste0(lep_tb_path,"/",toupper(tb),"_lsoa11.shp"),con,pwd)
-  get_subset_geo(paste0("msoa11"), "msoa11cd", field_value_msoa, paste0(lep_tb_path,"/",toupper(tb),"_msoa11.shp"),con,pwd)
+  get_subset_geo(paste0("oa11"), "oa11cd", field_value_oa, paste0(cauth_tb_path,"/",toupper(tb),"_oa11.shp"),con,pwd)
+  get_subset_geo(paste0("lsoa11"), "lsoa11cd", field_value_lsoa, paste0(cauth_tb_path,"/",toupper(tb),"_lsoa11.shp"),con,pwd)
+  get_subset_geo(paste0("msoa11"), "msoa11cd", field_value_msoa, paste0(cauth_tb_path,"/",toupper(tb),"_msoa11.shp"),con,pwd)
 
 }
 
