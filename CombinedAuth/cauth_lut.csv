@@ -1,0 +1,117 @@
+cauthid|cauth|lad|ladid|n_ladid
+1|Greater Manchester Combined Authority|Bolton|E08000001|E08000001
+1|Greater Manchester Combined Authority|Bury|E08000002|E08000002
+1|Greater Manchester Combined Authority|Oldham|E08000004|E08000004
+1|Greater Manchester Combined Authority|Manchester|E08000003|E08000003
+1|Greater Manchester Combined Authority|Rochdale|E08000005|E08000005
+1|Greater Manchester Combined Authority|Salford|E08000006|E08000006
+1|Greater Manchester Combined Authority|Stockport|E08000007|E08000007
+1|Greater Manchester Combined Authority|Tameside|E08000008|E08000008
+1|Greater Manchester Combined Authority|Trafford|E08000009|E08000009
+1|Greater Manchester Combined Authority|Wigan|E08000010|E08000010
+2|Liverpool City Region Combined Authority|Halton|E06000006|E06000006
+2|Liverpool City Region Combined Authority|Knowsley|E08000011|E08000011
+2|Liverpool City Region Combined Authority|Liverpool|E08000012|E08000012
+2|Liverpool City Region Combined Authority|Sefton|E08000014|E08000014
+2|Liverpool City Region Combined Authority|St. Helens|E08000013|E08000013
+2|Liverpool City Region Combined Authority|Wirral|E08000015|E08000015
+3|North East Combined Authority|County Durham|E06000047|E06000047
+3|North East Combined Authority|Gateshead|E08000020|E08000037
+3|North East Combined Authority|Newcastle upon Tyne|E08000021|E08000021
+3|North East Combined Authority|North Tyneside|E08000022|E08000022
+3|North East Combined Authority|Northumberland|E06000048|E06000057
+3|North East Combined Authority|South Tyneside|E08000023|E08000023
+3|North East Combined Authority|Sunderland|E08000024|E08000024
+4|Sheffield City Region Combined Authority|Barnsley|E08000016|E08000016
+4|Sheffield City Region Combined Authority|Doncaster|E08000017|E08000017
+4|Sheffield City Region Combined Authority|Rotherham|E08000018|E08000018
+4|Sheffield City Region Combined Authority|Sheffield|E08000019|E08000019
+5|Tees Valley Combined Authority|Middlesbrough|E06000002|E06000002
+5|Tees Valley Combined Authority|Hartlepool|E06000001|E06000001
+5|Tees Valley Combined Authority|Redcar and Cleveland|E06000003|E06000003
+5|Tees Valley Combined Authority|Stockton-on-Tees|E06000004|E06000004
+5|Tees Valley Combined Authority|Darlington|E06000005|E06000005
+6|West Midlands Combined Authority|Birmingham|E08000025|E08000025
+6|West Midlands Combined Authority|Coventry|E08000026|E08000026
+6|West Midlands Combined Authority|Dudley|E08000027|E08000027
+6|West Midlands Combined Authority|Sandwell|E08000028|E08000028
+6|West Midlands Combined Authority|Solihull|E08000029|E08000029
+6|West Midlands Combined Authority|Walsall|E08000030|E08000030
+6|West Midlands Combined Authority|Wolverhampton|E08000031|E08000031
+7|West Yorkshire Combined Authority|Bradford|E08000032|E08000032
+7|West Yorkshire Combined Authority|Calderdale|E08000033|E08000033
+7|West Yorkshire Combined Authority|Kirklees|E08000034|E08000034
+7|West Yorkshire Combined Authority|Leeds|E08000035|E08000035
+7|West Yorkshire Combined Authority|Wakefield|E08000036|E08000036
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|South Bucks|E07000006|E07000006
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|Chiltern|E07000005|E07000005
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|Wycombe|E07000007|E07000007
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|Aylesbury Vale|E07000004|E07000004
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|Milton Keynes|E06000042|E06000042
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|Oxford|E07000178|E07000178
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|Cherwell|E07000177|E07000177
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|South Oxfordshire|E07000179|E07000179
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|Vale of White Horse|E07000180|E07000180
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|West Oxfordshire|E07000181|E07000181
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|South Northamptonshire|E07000155|E07000155
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|Northampton|E07000154|E07000154
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|Daventry|E07000151|E07000151
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|Wellingborough|E07000156|E07000156
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|Kettering|E07000153|E07000153
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|Corby|E07000150|E07000150
+91|Buckinghamshire,Oxfordshire & Northamptonshire Combined Authority|East Northamptonshire|E07000152|E07000152
+92|East Anglia Combined Authority|Babergh|E07000200|E07000200
+92|East Anglia Combined Authority|Breckland|E07000143|E07000143
+92|East Anglia Combined Authority|Broadland|E07000144|E07000144
+92|East Anglia Combined Authority|Cambridge|E07000008|E07000008
+92|East Anglia Combined Authority|South Cambridgeshire|E07000012|E07000012
+92|East Anglia Combined Authority|Huntingdonshire|E07000011|E07000011
+92|East Anglia Combined Authority|Fenland|E07000010|E07000010
+92|East Anglia Combined Authority|East Cambridgeshire|E07000009|E07000009
+92|East Anglia Combined Authority|Peterborough|E06000031|E06000031
+92|East Anglia Combined Authority|East Cambridgeshire|E07000009|E07000009
+92|East Anglia Combined Authority|Fenland|E07000010|E07000010
+92|East Anglia Combined Authority|Forest Heath|E07000201|E07000201
+92|East Anglia Combined Authority|Great Yarmouth|E07000145|E07000145
+92|East Anglia Combined Authority|Huntingdonshire|E07000011|E07000011
+92|East Anglia Combined Authority|Ipswich|E07000202|E07000202
+92|East Anglia Combined Authority|Kings Lynn and West Norfolk|E07000146|E07000146
+92|East Anglia Combined Authority|Mid Suffolk|E07000203|E07000203
+92|East Anglia Combined Authority|North Norfolk|E07000147|E07000147
+92|East Anglia Combined Authority|Norwich|E07000148|E07000148
+92|East Anglia Combined Authority|Peterborough|E06000031|E06000031
+92|East Anglia Combined Authority|St Edmundsbury|E07000204|E07000204
+92|East Anglia Combined Authority|South Cambridgeshire|E07000012|E07000012
+92|East Anglia Combined Authority|South Norfolk|E07000149|E07000149
+92|East Anglia Combined Authority|Suffolk Coastal|E07000205|E07000205
+92|East Anglia Combined Authority|Waveney|E07000206|E07000206
+93|Greater Lincolnshire Combined Authority|Boston|E07000136|E07000136
+93|Greater Lincolnshire Combined Authority|East Lindsey|E07000137|E07000137
+93|Greater Lincolnshire Combined Authority|North East Lincolnshire|E06000012|E06000012
+93|Greater Lincolnshire Combined Authority|North Kesteven|E07000139|E07000139
+93|Greater Lincolnshire Combined Authority|North Lincolnshire|E06000013|E06000013
+93|Greater Lincolnshire Combined Authority|Lincoln|E07000138|E07000138
+93|Greater Lincolnshire Combined Authority|South Holland|E07000140|E07000140
+93|Greater Lincolnshire Combined Authority|South Kesteven|E07000141|E07000141
+93|Greater Lincolnshire Combined Authority|West Lindsey|E07000142|E07000142
+94|North Midlands Combined Authority|Amber Valley|E07000032|E07000032
+94|North Midlands Combined Authority|Ashfield|E07000170|E07000170
+94|North Midlands Combined Authority|Bassetlaw|E07000171|E07000171
+94|North Midlands Combined Authority|Bolsover|E07000033|E07000033
+94|North Midlands Combined Authority|Broxtowe|E07000172|E07000172
+94|North Midlands Combined Authority|Chesterfield|E07000034|E07000034
+94|North Midlands Combined Authority|Derby|E06000015|E06000015
+94|North Midlands Combined Authority|Derbyshire Dales|E07000035|E07000035
+94|North Midlands Combined Authority|Erewash|E07000036|E07000036
+94|North Midlands Combined Authority|Gedling|E07000173|E07000173
+94|North Midlands Combined Authority|High Peak|E07000037|E07000037
+94|North Midlands Combined Authority|Mansfield|E07000174|E07000174
+94|North Midlands Combined Authority|Newark and Sherwood|E07000175|E07000175
+94|North Midlands Combined Authority|North East Derbyshire|E07000038|E07000038
+94|North Midlands Combined Authority|Nottingham|E06000018|E06000018
+94|North Midlands Combined Authority|Rushcliffe|E07000176|E07000176
+94|North Midlands Combined Authority|South Derbyshire|E07000039|E07000039
+95|West of England Combined Authority|Bath and North East Somerset|E06000022|E06000022
+95|West of England Combined Authority|Bristol, City of|E06000023|E06000023
+95|West of England Combined Authority|North Somerset|E06000024|E06000024
+95|West of England Combined Authority|South Gloucestershire|E06000025|E06000025
