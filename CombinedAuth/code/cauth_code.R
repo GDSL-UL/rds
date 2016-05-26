@@ -18,14 +18,10 @@ write.table(cauth_lut, file = paste(getwd(),"/CombinedAuth/cauth_lut.csv", sep =
 cauthids <- unique(cauth_lut[,c("cauthid", "cauth")])
 
 # Add OAs and LADs in PostGIS
-db <- create_db("cdrcdb", "kd", pwd, spacetable= "open_path", extensions = c("POSTGIS"))
 
 con <- odbcConnect("cdrcdb", uid = "kd", pwd= pwd)
 username <- unlist(strsplit(unlist(strsplit(attributes(con)$connection.string, ";"))[5], "="))[2]
 db_name <- unlist(strsplit(unlist(strsplit(attributes(con)$connection.string, ";"))[2], "="))[2]
- 
-import_or_append(con, paste(getwd(),"/s_data", sep = ""), "oa2011", "england_oa_2011_gen.shp")
-import_or_append(con, paste(getwd(),"/s_data", sep = ""), "lads", "district_borough_unitary_region.shp")
 
 # Add CombinedAuth lookup table in PostGIS
 csv_types <- "cauthid varchar, cauth varchar, lad varchar, ladid varchar, n_ladid varchar"

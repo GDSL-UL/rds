@@ -1,6 +1,6 @@
 ##########################################################################################################
 #                         Output readme.txt, datasets_descriotion.csv, metadata.xml file                 #
-#                            for each LEP at the OA, LSOA, MSOA scales                                   #
+#                            for each Combined Authority at the OA, LSOA, MSOA scales                                   #
 ##########################################################################################################
 library(whisker)
 
@@ -38,27 +38,22 @@ setwd("/media/kd/Data/Dropbox/Repos/rds")
 
 template <- readLines("/media/kd/Data/Dropbox/Repos/rds/m_code/ckan/xml_doc.xml")
 
-leps_lut <- read.csv(paste(getwd(),"/LEPs/leps.csv", sep = ""), sep="|")
-leps_ids <- read.csv(paste(getwd(),"/LEPs/lepids.csv", sep = ""), sep="|", colClasses = c("character", "character"))
-leps_lut$lepid <- leps_ids[match(leps_lut$lep, leps_ids$lepname),1]
-
-lookup_lep <- unique(leps_lut[,c("lepid", "lep")])
-lookup_lep[,1] <- as.character(lookup_lep[,1])
-lookup_lep[,2] <- as.character(lookup_lep[,2])
+cauth_lut <- read.csv(paste(getwd(),"/CombinedAuth/cauth_lut.csv", sep = ""), sep="|")
+cauth_ids <- unique(cauth_lut[,c("cauthid", "cauth")])
 
 
-setwd("/media/kd/Data/temp/LEPs")
+setwd("/media/kd/Data/temp/CombinedAuth")
 fromfile1 <- "/media/kd/Data/Dropbox/Repos/rds/m_code/ckan/datasets_description.csv"
 fromfile2 <- "/media/kd/Data/Dropbox/Repos/rds/m_code/ckan/var_desc.csv"
-for (i in 1:nrow(lookup_lep)){
+for (i in 1:nrow(cauth_ids)){
   
-  code <- paste0("LEP", lookup_lep[i,"lepid"])
-  name <- lookup_lep[i,"lep"]
+  code <- paste0("CombAuth", cauth_ids[i,"cauthid"])
+  name <- cauth_ids[i,"cauth"]
   
   data$keyword <- c("Census", "2011", code)
   
-  data$titl <- paste("CDRC 2011 Census Data Packs for Local Enterprise Partnership: ", name,  " (", code, ")", sep="")
-  data$abstract <- paste("This census data pack provides 2011 Census estimates for the 'Key Statistic' and 'Quick Statistic' tables within the Local Enterprise Partnership: ",
+  data$titl <- paste("CDRC 2011 Census Data Packs for Combined Authority: ", name,  " (", code, ")", sep="")
+  data$abstract <- paste("This census data pack provides 2011 Census estimates for the 'Key Statistic' and 'Quick Statistic' tables within the Combined Authority: ",
                          name, " (", code, ")",
                          " at the Output Area, Lower Super Output Area and Middle Super Output Area scale. The estimates are as at census day, 27 March 2011.",sep="")
   data$nation <- "England"
@@ -74,8 +69,8 @@ for (i in 1:nrow(lookup_lep)){
                "\t - metadata.xml: Metadata",
                "\t - datasets_description.csv: Description of the 2011 Census Key Statistic and Quick Statistic datasets",
                "\t - variables_description.csv: Description of the 2011 Census Key Statistic and Quick Statistic variables",
-               paste("\t - tables: Folder containing the OA, LSOA and MSOA 2011 Census data for the Local Enterprise Partnership: ", name, " (", code, ")", sep=""),
-               paste("\t - shapefiles: Folder containing the OA, LSOA and MSOA digital boundaries as shapefiles for the Local Enterprise Partnership: ", name, " (", code, ")", sep=""),
+               paste("\t - tables: Folder containing the OA, LSOA and MSOA 2011 Census data for the Combined Authority: ", name, " (", code, ")", sep=""),
+               paste("\t - shapefiles: Folder containing the OA, LSOA and MSOA digital boundaries as shapefiles for the Combined Authority: ", name, " (", code, ")", sep=""),
                "\n",
                "+ Statistical Disclosure Control",
                "In order to protect against disclosure of personal information from the 2011 Census, there has been swapping of records in the Census database between different geographic areas and so some counts will be affected.",
@@ -102,12 +97,8 @@ for (i in 1:nrow(lookup_lep)){
 }
 
 
-
 ############################################### zip folders #################################################
-dir.create("leps_data")
-out_path <- paste(getwd(), "leps_data", sep="/")
-in_path <- paste(getwd(), "lad_data", sep="/")
-setwd(in_path)
-for (lad in lookup_lad$LAD11NM){
-  zip(paste(out_path,"/", lad,".zip",sep=""), files=lad)
+for (cauth in cauthids$cauthid){
+  zip(paste(getwd(),"/CombAuth", cauth,".zip",sep=""), files=paste0("CombAuth",cauth))
 }
+

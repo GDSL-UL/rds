@@ -1,6 +1,6 @@
 ##########################################################################################################
 #                         Output readme.txt, datasets_descriotion.csv, metadata.xml file                 #
-#                            for each LEP at the OA, LSOA, MSOA scales                                   #
+#                            for each Northern Powerhouse Region at the OA, LSOA, MSOA scales                                   #
 ##########################################################################################################
 library(whisker)
 
@@ -38,27 +38,22 @@ setwd("/media/kd/Data/Dropbox/Repos/rds")
 
 template <- readLines("/media/kd/Data/Dropbox/Repos/rds/m_code/ckan/xml_doc.xml")
 
-leps_lut <- read.csv(paste(getwd(),"/LEPs/leps.csv", sep = ""), sep="|")
-leps_ids <- read.csv(paste(getwd(),"/LEPs/lepids.csv", sep = ""), sep="|", colClasses = c("character", "character"))
-leps_lut$lepid <- leps_ids[match(leps_lut$lep, leps_ids$lepname),1]
-
-lookup_lep <- unique(leps_lut[,c("lepid", "lep")])
-lookup_lep[,1] <- as.character(lookup_lep[,1])
-lookup_lep[,2] <- as.character(lookup_lep[,2])
+np_lut <- read.csv(paste(getwd(),"/NPowerhouse/np_lut.csv", sep = ""), sep="|")
+np_ids <- unique(np_lut[,c("npid", "np")])
 
 
-setwd("/media/kd/Data/temp/LEPs")
+setwd("/media/kd/Data/temp/NPowerhouse")
 fromfile1 <- "/media/kd/Data/Dropbox/Repos/rds/m_code/ckan/datasets_description.csv"
 fromfile2 <- "/media/kd/Data/Dropbox/Repos/rds/m_code/ckan/var_desc.csv"
-for (i in 1:nrow(lookup_lep)){
+for (i in 1:nrow(np_ids)){
   
-  code <- paste0("LEP", lookup_lep[i,"lepid"])
-  name <- lookup_lep[i,"lep"]
+  code <- paste0("NP", np_ids[i,"npid"])
+  name <- np_ids[i,"np"]
   
   data$keyword <- c("Census", "2011", code)
   
-  data$titl <- paste("CDRC 2011 Census Data Packs for Local Enterprise Partnership: ", name,  " (", code, ")", sep="")
-  data$abstract <- paste("This census data pack provides 2011 Census estimates for the 'Key Statistic' and 'Quick Statistic' tables within the Local Enterprise Partnership: ",
+  data$titl <- paste("CDRC 2011 Census Data Packs for Northern Powerhouse Region: ", name,  " (", code, ")", sep="")
+  data$abstract <- paste("This census data pack provides 2011 Census estimates for the 'Key Statistic' and 'Quick Statistic' tables within the Northern Powerhouse Region: ",
                          name, " (", code, ")",
                          " at the Output Area, Lower Super Output Area and Middle Super Output Area scale. The estimates are as at census day, 27 March 2011.",sep="")
   data$nation <- "England"
@@ -74,8 +69,8 @@ for (i in 1:nrow(lookup_lep)){
                "\t - metadata.xml: Metadata",
                "\t - datasets_description.csv: Description of the 2011 Census Key Statistic and Quick Statistic datasets",
                "\t - variables_description.csv: Description of the 2011 Census Key Statistic and Quick Statistic variables",
-               paste("\t - tables: Folder containing the OA, LSOA and MSOA 2011 Census data for the Local Enterprise Partnership: ", name, " (", code, ")", sep=""),
-               paste("\t - shapefiles: Folder containing the OA, LSOA and MSOA digital boundaries as shapefiles for the Local Enterprise Partnership: ", name, " (", code, ")", sep=""),
+               paste("\t - tables: Folder containing the OA, LSOA and MSOA 2011 Census data for the Northern Powerhouse Region: ", name, " (", code, ")", sep=""),
+               paste("\t - shapefiles: Folder containing the OA, LSOA and MSOA digital boundaries as shapefiles for the Northern Powerhouse Region: ", name, " (", code, ")", sep=""),
                "\n",
                "+ Statistical Disclosure Control",
                "In order to protect against disclosure of personal information from the 2011 Census, there has been swapping of records in the Census database between different geographic areas and so some counts will be affected.",
@@ -104,7 +99,7 @@ for (i in 1:nrow(lookup_lep)){
 
 
 ############################################### zip folders #################################################
-for (lep in lookup_lep$lepid){
-  zip(paste(getwd(),"/LEP", lep,".zip",sep=""), files=paste0("LEP",lep))
+for (np in npids$npid){
+  zip(paste(getwd(),"/NP", np,".zip",sep=""), files=paste0("NP",np))
 }
 
