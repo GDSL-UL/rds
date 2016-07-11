@@ -2,11 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-CombinedAuth/data/
 CombinedAuth/outputs/
-LEPs/data/
 LEPs/outputs/
-NPowerhouse/data/
 NPowerhouse/outputs/
 s_data/
 m_code/
