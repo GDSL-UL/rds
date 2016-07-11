@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+CombinedAuth/outputs/
+LEPs/outputs/
+NPowerhouse/outputs/
+s_data/
+m_code/
